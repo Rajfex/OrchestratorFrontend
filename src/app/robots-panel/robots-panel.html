@@ -1,0 +1,45 @@
+<div class="min-h-screen bg-gray-100 p-6">
+  <h1 class="text-2xl font-bold mb-6 text-gray-800">Robots Panel</h1>
+
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    @if (truckRoutesResource.value(); as robots) {
+      @for (robot of robots; track robot.id) {
+        <div class="bg-white shadow-md rounded-2xl p-5 hover:shadow-xl transition">
+          
+          <div class="mb-3">
+            <h2 class="text-lg font-semibold text-gray-900">
+              {{ robot.name }}
+            </h2>
+            <p class="text-sm text-gray-500">
+              ID: {{ robot.id }}
+            </p>
+          </div>
+
+          <div class="space-y-2 text-sm">
+            <p>
+              <span class="font-medium text-gray-700">API Key:</span>
+              <span class="text-gray-600 break-all">{{ robot.apiKey }}</span>
+            </p>
+
+            <p>
+              <span class="font-medium text-gray-700">Status:</span>
+              <span 
+                class="px-2 py-1 rounded-full text-xs font-semibold"
+                [ngClass]="{
+                  'bg-green-100 text-green-700': robot.status === '1',
+                  'bg-red-100 text-red-700': robot.status === '2',
+                  'bg-yellow-100 text-yellow-700': robot.status !== '1' && robot.status !== '2'
+                }"
+              >
+                {{ robot.status }}
+              </span>
+            </p>
+          </div>
+
+        </div>
+      }
+    } @else {
+      <p class="text-gray-500">Loading</p>
+    }
+  </div>
+</div>

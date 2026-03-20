@@ -1,0 +1,73 @@
+:host {
+	display: block;
+	min-height: 100vh;
+	font-family: Arial, sans-serif;
+	background: #f5f7fb;
+}
+
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 20px;
+	background: #1f2937;
+	color: #ffffff;
+}
+
+.brand {
+	font-weight: 700;
+}
+
+.nav-actions {
+	display: flex;
+	gap: 8px;
+}
+
+.nav-actions button {
+	padding: 6px 10px;
+	border: 0;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.container {
+	max-width: 520px;
+	margin: 24px auto;
+	padding: 20px;
+	background: #ffffff;
+	border-radius: 8px;
+}
+
+.auth-form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.auth-form input {
+	padding: 8px;
+	border: 1px solid #d1d5db;
+	border-radius: 6px;
+}
+
+.auth-form button {
+	margin-top: 8px;
+	padding: 8px 10px;
+	border: 0;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.token-box {
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	padding: 12px;
+	background: #f9fafb;
+	word-break: break-all;
+}
+
+.message {
+	margin-top: 12px;
+	font-weight: 600;
+}

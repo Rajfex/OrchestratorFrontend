@@ -1,0 +1,28 @@
+<div class="p-4">
+  <h2 class="text-xl font-bold mb-4">Logs</h2>
+
+  <table class="w-full border-collapse border border-gray-200 text-left text-sm">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="p-2 border border-gray-200">ID</th>
+        <th class="p-2 border border-gray-200">Task ID</th>
+        <th class="p-2 border border-gray-200">Message</th>
+        <th class="p-2 border border-gray-200">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (log of logsResponse.value(); track log.id) {
+        <tr class="hover:bg-gray-50">
+          <td class="p-2 border border-gray-200 font-mono text-xs">{{ log.id }}</td>
+          <td class="p-2 border border-gray-200 font-mono text-xs">{{ log.taskId }}</td>
+          <td class="p-2 border border-gray-200">{{ log.message }}</td>
+          <td class="p-2 border border-gray-200">{{ log.created | date:'short' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if (logsResponse.isLoading()) {
+    <p class="mt-2 text-blue-500">Loading...</p>
+  }
+</div>
