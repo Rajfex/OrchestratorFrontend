@@ -20,6 +20,7 @@ export type TaskItem = {
   styleUrl: './tasks.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class Tasks{
   private readonly http = inject(HttpClient);
   private readonly apiUrl = 'https://localhost:7028/api/tasks/all';

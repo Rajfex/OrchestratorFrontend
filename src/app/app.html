@@ -8,6 +8,57 @@
         <a routerLink="/logs" class="hover:text-indigo-300 transition m-5">Logs</a>
     </div>
 
+  @if (notificationsWebSockets().length > 0) {
+    <div class="fixed bottom-4 right-4 space-y-2 z-50">
+      
+      @for (msg of notificationsWebSockets(); track $index) {
+        <div class="bg-yellow-100 text-yellow-800 p-3 rounded shadow-md min-w-[250px] flex justify-between items-start">
+          
+          <span>{{ msg.text }}</span>
+          
+          <button class="ml-3 font-bold" (click)="removeNotificationWebSockets($index)">×</button>
+
+        </div>
+      }
+
+    </div>
+  }
+  
+
+
+  @if (notificationsLongPolling().length > 0) {
+    <div class="fixed bottom-0 left-0 m-4 space-y-2 z-50">
+      
+      @for (msg of notificationsLongPolling(); track $index) {
+        <div class="bg-yellow-100 text-yellow-800 p-3 rounded shadow-md min-w-[250px] flex justify-between items-start">
+          
+          <span>{{ msg.text }}</span>
+
+          <button class="ml-3 font-bold"(click)="removeNotificationLongPolling($index)">×</button>
+
+        </div>
+      }
+
+    </div>
+  }
+
+  @if (notificationsSEE().length > 0) {
+    <div class="fixed top-0 left-0 m-4 space-y-2 z-50">
+      
+      @for (msg of notificationsSEE(); track $index) {
+        <div class="bg-yellow-100 text-yellow-800 p-3 rounded shadow-md min-w-[250px] flex justify-between items-start">
+          
+          <span>{{ msg.text }}</span>
+
+          <button class="ml-3 font-bold"(click)="retmoveNotificationSEE($index)">×</button>
+
+        </div>
+      }
+
+    </div>
+  }
+
+
     <div>
     @if (isAuthenticated()) {
       <button
