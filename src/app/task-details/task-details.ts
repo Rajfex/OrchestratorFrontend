@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 export type TaskItem = {
   id: string;
+  name: string;
   inputData: string;
   outputData: string;
   taskStatusId: number;

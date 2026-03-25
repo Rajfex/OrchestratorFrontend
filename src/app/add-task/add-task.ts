@@ -17,11 +17,13 @@ export class AddTask {
 
   fsCountry: string = '';
   fsLeague: string = '';
+  fsName: string = '';
   flashscoreList: { country: string; leagueName: string }[] = [];
 
   stType: string = 'Akcje';
   stPeriod: string = '';
   stName: string = '';
+  stTaskName: string = '';
   stocksList: { type: string; period: string; name: string }[] = [];
 
 
@@ -35,7 +37,7 @@ export class AddTask {
 
 
   addFlash(): void {
-    if (!this.fsCountry || !this.fsLeague) return;
+    if (!this.fsCountry || !this.fsLeague || !this.fsName) return;
 
     this.flashscoreList.push({
       country: this.fsCountry,
@@ -47,7 +49,7 @@ export class AddTask {
   }
 
   addStock(): void {
-    if (!this.stName || !this.stPeriod) return;
+    if (!this.stName || !this.stPeriod || !this.stTaskName) return;
 
     this.stocksList.push({
       type: this.stType,
@@ -64,7 +66,8 @@ export class AddTask {
     const payload = {
       inputData: {
         FootballLeagueInfo: this.flashscoreList,
-      }
+      },
+      name: this.fsName,
     };
 
     this.http.post('https://localhost:7028/api/tasks/create', payload)
@@ -80,7 +83,8 @@ export class AddTask {
     const payload = {
       inputData: {
         StocksInfo: this.stocksList,
-      }
+      },
+      name: this.stTaskName,
     };
 
     this.http.post('https://localhost:7028/api/tasks/create', payload)
