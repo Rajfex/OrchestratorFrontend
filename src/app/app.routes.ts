@@ -21,5 +21,5 @@ export const routes: Routes = [
     { path: 'addTask', component: AddTask, canActivate: [authGuard] },
     { path: 'tasks', component: Tasks, canActivate: [authGuard] },
     { path: 'tasks/:id', component: TaskDetails, canActivate: [authGuard] },
-    { path: 'logs', component: LogsList, canActivate: [authGuard] },
+    { path: 'logs/:page', component: LogsList, canActivate: [authGuard] },
 ];

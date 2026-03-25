@@ -1,22 +1,38 @@
 <div class="p-4">
   <h2 class="text-xl font-bold mb-4">Logs</h2>
 
+  <div>
+    <button class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed" (click)="prev()" [disabled]="page() === 1">Previous</button>
+    <span class="mx-2">Page {{ page() }}</span>
+    <button class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed" (click)="next()">Next</button>
+  </div>
+
   <table class="w-full border-collapse border border-gray-200 text-left text-sm">
     <thead class="bg-gray-100">
       <tr>
         <th class="p-2 border border-gray-200">ID</th>
         <th class="p-2 border border-gray-200">Task ID</th>
         <th class="p-2 border border-gray-200">Message</th>
-        <th class="p-2 border border-gray-200">Date</th>
+        <th class="p-2 border border-gray-200">
+          <button class="underline" (click)="toggleDateSort()" [disabled]="logsResponse.isLoading()">
+            Date {{ sortDirection() === 'desc' ? '↓' : '↑' }}
+          </button>
+        </th>
       </tr>
     </thead>
     <tbody>
-      @for (log of logsResponse.value(); track log.id) {
+      @for (log of sortedLogs(); track log.id) {
         <tr class="hover:bg-gray-50">
           <td class="p-2 border border-gray-200 font-mono text-xs">{{ log.id }}</td>
           <td class="p-2 border border-gray-200 font-mono text-xs">{{ log.taskId }}</td>
           <td class="p-2 border border-gray-200">{{ log.message }}</td>
           <td class="p-2 border border-gray-200">{{ log.created | date:'short' }}</td>
+        </tr>
+      }
+
+      @if (!logsResponse.isLoading() && (logsResponse.value()?.length ?? 0) === 0) {
+        <tr>
+          <td class="p-3 text-center text-gray-500" colspan="4">No logs on this page.</td>
         </tr>
       }
     </tbody>
