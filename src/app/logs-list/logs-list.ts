@@ -17,6 +17,7 @@ type Log = {
   styleUrls: ['./logs-list.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class LogsList {
   page = signal(1);
   sortDirection = signal<'desc' | 'asc'>('desc');

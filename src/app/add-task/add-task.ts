@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './add-task.html',
   styleUrl: './add-task.css',
 })
+
 export class AddTask {
   constructor(private http: HttpClient) {}
 
@@ -26,7 +27,6 @@ export class AddTask {
   stTaskName: string = '';
   stocksList: { type: string; period: string; name: string }[] = [];
 
-
   toggleFlashscore(): void {
     this.activeTab = 'flash';
   }
@@ -34,7 +34,6 @@ export class AddTask {
   toggleStocks(): void {
     this.activeTab = 'stocks';
   }
-
 
   addFlash(): void {
     if (!this.fsCountry || !this.fsLeague || !this.fsName) return;
@@ -60,7 +59,6 @@ export class AddTask {
     this.stName = '';
     this.stPeriod = '';
   }
-
 
   submitFlash(): void {
     const payload = {

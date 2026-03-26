@@ -39,7 +39,6 @@ export class NotificationSSEService {
     }
   }
 
-
   closeConnection(): void {
     if (!this.hubConnection) {
       return;
@@ -49,5 +48,4 @@ export class NotificationSSEService {
     this.hubConnection = undefined;
     this.isStarting = false;
   }
-
 }

@@ -10,15 +10,12 @@ import { AuthService } from '../auth.service';
   styleUrl: './register-form.css',
 })
 export class RegisterForm {
-
   name: string = '';
   password: string = '';
-
 
   constructor(private authService: AuthService) {}
 
   register() {
-
     this.authService.register(this.name, this.password).subscribe({
       next: (res: any) => {
         console.log();
@@ -28,5 +25,4 @@ export class RegisterForm {
       }
     });
   }
-
 }

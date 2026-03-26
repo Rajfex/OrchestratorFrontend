@@ -15,6 +15,7 @@ type RobotsInfo = {
   templateUrl: './robots-panel.html',
   styleUrl: './robots-panel.css',
 })
+
 export class RobotsPanel {
-    readonly truckRoutesResource = httpResource<RobotsInfo[]>(() => 'https://localhost:7028/api/robots');
+  readonly robots = httpResource<RobotsInfo[]>(() => 'https://localhost:7028/api/robots');
 }

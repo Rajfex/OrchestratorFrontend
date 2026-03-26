@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, httpResource } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-export type TaskItem = {
+type TaskItem = {
   id: string;
   name: string;
   inputData: string;
@@ -11,10 +12,17 @@ export type TaskItem = {
   robotId: string;
 };
 
+type RobotsInfo = {
+  id: number;
+  name: string;
+  apiKey: string;
+  status: string;
+}
+
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './tasks.html',
   styleUrl: './tasks.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -26,10 +34,29 @@ export class Tasks implements OnInit {
   readonly page = signal(1);
   private readonly allTasks = signal<TaskItem[]>([]);
   
+  readonly robots = httpResource<RobotsInfo[]>(() => 'https://localhost:7028/api/robots');
+
+  readonly TaskNameFilter = signal('');
+  readonly withRobotFilter = signal('0');
+
+  handleRobotFilterChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+    this.withRobotFilter.set(selectedValue);
+  }
+
   readonly tasks = computed(() => {
     const pageSize = 10;
     const start = (this.page() - 1) * pageSize;
-    return this.allTasks().slice(start, start + pageSize);
+    if(this.TaskNameFilter() == "" && this.withRobotFilter() == "0") {
+      return this.allTasks().slice(start, start + pageSize);
+    } else if(this.TaskNameFilter() != "" && this.withRobotFilter() == "0") {
+      return this.allTasks().filter(task => task.name.toLowerCase().includes(this.TaskNameFilter().toLowerCase())).slice(start, start + pageSize);
+    } else if(this.TaskNameFilter() == "" && this.withRobotFilter() != "0") {
+      return this.allTasks().filter(task => task.robotId === this.withRobotFilter()).slice(start, start + pageSize);
+    } else {
+      return this.allTasks().filter(task => task.name.toLowerCase().includes(this.TaskNameFilter().toLowerCase()) && task.robotId === this.withRobotFilter()).slice(start, start + pageSize);
+    }
   });
 
   readonly hasNextPage = computed(() => {

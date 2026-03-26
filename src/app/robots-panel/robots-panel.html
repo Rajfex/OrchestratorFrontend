@@ -2,7 +2,7 @@
   <h1 class="text-2xl font-bold mb-6 text-gray-800">Robots Panel</h1>
 
   <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    @if (truckRoutesResource.value(); as robots) {
+    @if (robots.value(); as robots) {
       @for (robot of robots; track robot.id) {
         <div class="bg-white shadow-md rounded-2xl p-5 hover:shadow-xl transition">
           

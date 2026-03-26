@@ -24,14 +24,12 @@ export class App {
   readonly token = this.authService.token;
   readonly errorMessage = signal('');
 
-
   private readonly notificationWebSocketsService = inject(NotificationWebSocketsService);
   readonly notificationsWebSockets = this.notificationWebSocketsService.messages;
 
   removeNotificationWebSockets(index: number) {
     this.notificationsWebSockets.update(list => list.filter((_, i) => i !== index));
   }
-
 
   private readonly notificationLongPollingService = inject(NotificationLongPollingService);
   readonly notificationsLongPolling = this.notificationLongPollingService.messages;
@@ -52,8 +50,6 @@ export class App {
     this.notificationLongPollingService.startConnection();
     this.notificationSEEService.startConnection();
   }
-
-
 
   onLogin(): void {
     if (this.loginForm.invalid) {
