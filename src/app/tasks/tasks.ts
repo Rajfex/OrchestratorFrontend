@@ -1,7 +1,9 @@
+import { NgClass } from '@angular/common';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import * as XLSX from 'xlsx';
 
 type TaskItem = {
   id: string;
@@ -17,76 +19,89 @@ type RobotsInfo = {
   name: string;
   apiKey: string;
   status: string;
-}
+};
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, NgClass],
   templateUrl: './tasks.html',
   styleUrl: './tasks.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class Tasks implements OnInit {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = 'https://localhost:7028/api/tasks/all';
 
   readonly page = signal(1);
   private readonly allTasks = signal<TaskItem[]>([]);
-  
   readonly robots = httpResource<RobotsInfo[]>(() => 'https://localhost:7028/api/robots');
 
+  readonly DisplayType = signal<'list' | 'tiled'>('tiled');
   readonly TaskNameFilter = signal('');
   readonly withRobotFilter = signal('0');
 
-  handleRobotFilterChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    const selectedValue = selectElement.value;
-    this.withRobotFilter.set(selectedValue);
-  }
+  readonly isLoading = signal(false);
+  readonly errorMessage = signal('');
+
+  readonly filteredTasks = computed(() => {
+    const nameFilter = this.TaskNameFilter().toLowerCase();
+    const robotFilter = this.withRobotFilter();
+
+    return this.allTasks().filter(task => {
+      const matchesName = nameFilter === "" || task.name.toLowerCase().includes(nameFilter);
+      const matchesRobot = robotFilter === "0" || task.robotId === robotFilter;
+      return matchesName && matchesRobot;
+    });
+  });
 
   readonly tasks = computed(() => {
-    const pageSize = 10;
+    const pageSize = 9;
     const start = (this.page() - 1) * pageSize;
-    if(this.TaskNameFilter() == "" && this.withRobotFilter() == "0") {
-      return this.allTasks().slice(start, start + pageSize);
-    } else if(this.TaskNameFilter() != "" && this.withRobotFilter() == "0") {
-      return this.allTasks().filter(task => task.name.toLowerCase().includes(this.TaskNameFilter().toLowerCase())).slice(start, start + pageSize);
-    } else if(this.TaskNameFilter() == "" && this.withRobotFilter() != "0") {
-      return this.allTasks().filter(task => task.robotId === this.withRobotFilter()).slice(start, start + pageSize);
-    } else {
-      return this.allTasks().filter(task => task.name.toLowerCase().includes(this.TaskNameFilter().toLowerCase()) && task.robotId === this.withRobotFilter()).slice(start, start + pageSize);
-    }
+    return this.filteredTasks().slice(start, start + pageSize);
   });
 
   readonly hasNextPage = computed(() => {
-    return this.allTasks().length > this.page() * 10;
+    return this.filteredTasks().length > this.page() * 9;
   });
-
-  readonly isLoading = signal(false);
-  readonly errorMessage = signal('');
 
   ngOnInit(): void {
     this.loadTasks();
   }
 
-  refresh(): void {
-    this.loadTasks();
+
+  handleRobotFilterChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.withRobotFilter.set(selectElement.value);
+    this.page.set(1);
   }
 
-  prev(): void {
-    if (this.page() > 1) {
-      this.page.update((value) => value - 1);
-    }
+  exportToExcel(): void {
+    const data = this.filteredTasks();
+    if (data.length === 0) return;
+
+    const exportData = data.map(task => {
+      const robot = this.robots.value()?.find(r => r.id.toString() === task.robotId);
+      return {
+        'ID': task.id,
+        'Nazwa Zadania': task.name,
+        'Robot': robot ? robot.name : 'Nieprzypisany',
+        'Status ID': task.taskStatusId,
+        'Dane Wejściowe': task.inputData,
+        'Dane Wyjściowe': task.outputData
+      };
+    });
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Zadania');
+
+    const fileName = `Tasks_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(workbook, fileName);
   }
 
-  next(): void {
-    if (this.hasNextPage()) {
-      this.page.update((value) => value + 1);
-    }
-  }
-
-  private loadTasks(): void {
+  loadTasks(): void {
     this.isLoading.set(true);
     this.errorMessage.set('');
 
@@ -96,9 +111,21 @@ export class Tasks implements OnInit {
         this.isLoading.set(false);
       },
       error: () => {
-        this.errorMessage.set('No tasks');
+        this.errorMessage.set('Błąd podczas ładowania zadań');
         this.isLoading.set(false);
       }
     });
+  }
+
+  refresh(): void {
+    this.loadTasks();
+  }
+
+  prev(): void {
+    if (this.page() > 1) this.page.update(v => v - 1);
+  }
+
+  next(): void {
+    if (this.hasNextPage()) this.page.update(v => v + 1);
   }
 }
