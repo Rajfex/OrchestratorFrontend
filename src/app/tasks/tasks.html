@@ -2,11 +2,11 @@
   <header class="flex items-center justify-between">
     <h2 class="text-2xl font-semibold text-slate-900">Tasks</h2>
       <div>
-      <button class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed" (click)="prev()" [disabled]="page() === 1">Previous</button>
+      <button class="rounded-lg bg-slate-900 w-22 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" (click)="prev()" [disabled]="page() === 1">Previous</button>
       <span class="mx-2">Page {{ page() }}</span>
-      <button class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed" (click)="next()">Next</button>
+      <button class="rounded-lg bg-slate-900 w-22 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" (click)="next()" [disabled]="!hasNextPage()">Next</button>
    </div>
-    <button type="button" class="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700" (click)="refresh()">
+    <button type="button" class="rounded-lg bg-slate-900 w-22 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95" (click)="refresh()">
       Refresh
     </button>
   </header>
@@ -24,12 +24,12 @@
         }
       </select>
     </div>
-    <button  class="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 mt-5" (click)="exportToExcel()" [disabled]="tasks().length === 0">Eksportuj do Excela</button>
+    <button  class="rounded-lg bg-slate-900 mt-6 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95" (click)="exportToExcel()" [disabled]="tasks().length === 0">Eksportuj do Excela</button>
   </div>
 
   <div>
-    <button class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 mr-3" (click)="DisplayType.set('tiled')">Tiled</button>
-    <button class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700" (click)="DisplayType.set('list')">List</button>
+    <button class="rounded-lg bg-slate-900 mr-2 w-19 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95" (click)="DisplayType.set('tiled')">Tiled</button>
+    <button class="rounded-lg bg-slate-900 mr-2 w-19 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95" (click)="DisplayType.set('list')">List</button>
   </div>
   
 

@@ -2,12 +2,12 @@
   <h2 class="text-xl font-bold mb-4">Logs</h2>
 
   <div>
-    <button class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed" (click)="prev()" [disabled]="page() === 1">Previous</button>
+    <button class="rounded-lg bg-slate-900 w-22 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" (click)="prev()" [disabled]="page() === 1">Previous</button>
     <span class="mx-2">Page {{ page() }}</span>
-    <button class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed" (click)="next()">Next</button>
+    <button class="rounded-lg bg-slate-900 w-22 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed" (click)="next()">Next</button>
   </div>
 
-  <table class="w-full border-collapse border border-gray-200 text-left text-sm">
+  <table class="w-full border-collapse border border-gray-200 text-left text-sm mt-5">
     <thead class="bg-gray-100">
       <tr>
         <th class="p-2 border border-gray-200">ID</th>

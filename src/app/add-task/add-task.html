@@ -3,8 +3,8 @@
 
   <div class="mb-6">
     <nav class="flex space-x-2">
-      <button class="px-4 py-2 rounded-md transition-colors" [ngClass]="activeTab === 'flash' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"  (click)="toggleFlashscore()">Flashscore</button>
-      <button class="px-4 py-2 rounded-md transition-colors" [ngClass]="activeTab === 'stocks' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'" (click)="toggleStocks()">Stocks</button>
+      <button class="px-4 py-2 rounded-md transition-colors font-bold" [ngClass]="activeTab === 'flash' ? 'bg-slate-900 text-white' : 'bg-white-200 text-gray-700 hover:bg-gray-300'"  (click)="toggleFlashscore()">Flashscore</button>
+      <button class="px-4 py-2 rounded-md transition-colors font-bold" [ngClass]="activeTab === 'stocks' ? 'bg-slate-900 text-white' : 'bg-white-200 text-gray-700 hover:bg-gray-300'" (click)="toggleStocks()">Stocks</button>
     </nav>
   </div>
 
@@ -24,8 +24,8 @@
       </div>
     </div>
     <div class="flex space-x-2">
-      <button class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600" (click)="addFlash()">Add to list</button>
-      <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" (click)="submitFlash()">Submit</button>
+      <button class="px-4 py-2 rounded-md font-semibold border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 transition-colors" (click)="addFlash()">Add to list</button>
+      <button class="px-4 py-2 rounded-md font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors" (click)="submitFlash()">Submit</button>
     </div>
   </div>
 
@@ -52,8 +52,8 @@
       </div>
     </div>
     <div class="flex space-x-2">
-      <button class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600" (click)="addStock()">Add to list</button>
-      <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" (click)="submitStocks()">Submit</button>
+      <button class="px-4 py-2 rounded-md font-semibold border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 transition-colors" (click)="addStock()">Add to list</button>
+      <button class="px-4 py-2 rounded-md font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors" (click)="submitStocks()">Submit</button>
     </div>
   </div>
 
