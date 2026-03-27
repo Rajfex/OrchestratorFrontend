@@ -6,8 +6,11 @@ This is the Angular frontend for RobotOrchestrator, providing a web interface fo
  - **Robots Management:** View all registered robots, their status, and API keys.
  - **Adding tasks:** Create new tasks for robots and monitor their execution status.
  - **Display logs:** Display system logs returned by the backend, including task‑related messages.
+ - **Filtering:** Filter tasks by status, robot, and execution date.
+ - **Pagination:** Paginated tables for tasks and logs to improve performance.
+ - **Export to XLSX:** Export tasks data to ```.xlsx``` file for reporting and analysis.
  - **API Integration:** Fully communicates with the ASP.NET backend.
-
+   
 ## Technologies
  - **Frontend**: Angular
 
